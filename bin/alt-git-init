@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -d ".git" ]; then
+  echo "Error: Already inside a git repository."
+  exit 1
+fi
+
+mkdir -p .git/refs/heads/ .git/refs/tags/ .git/objects/
+echo "ref: refs/heads/main" > .git/HEAD
+
+echo "Initialized empty Git repository"

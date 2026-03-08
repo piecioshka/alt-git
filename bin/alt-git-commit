@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ "$1" == "-m" ]]; then
+  message="$2"
+
+  if [ -z "$message" ]; then
+    echo "Error: Commit message is required."
+    exit 1
+  fi
+
+  files=$(git diff --cached --name-only)
+
+  if [ -z "$files" ]; then
+    echo "Error: Nothing to commit. Stage files with alt-git-add first."
+    exit 1
+  fi
+
+  while IFS= read -r file; do
+    git hash-object -w "$file" > /dev/null
+  done <<< "$files"
+
+  ## git commit
+  tree=$(git write-tree)
+
+  # Get the current commit hash to use as the parent commit
+  parent_commit=$(git rev-parse --verify HEAD 2>/dev/null || true)
+
+  ## Create a commit object with the tree and parent commit
+  if [ -z "$parent_commit" ]; then
+    echo "No parent commit found. Creating initial commit."
+    commit=$(git commit-tree "$tree" -m "$message")
+  else
+    echo "Parent commit found: $parent_commit."
+    echo "Creating new commit with parent."
+    commit=$(git commit-tree "$tree" -p "$parent_commit" -m "$message")
+  fi
+
+  ## Update the HEAD reference to point to the new commit
+  git update-ref HEAD "$commit"
+  exit 0
+fi
+
+echo "Error: Commit message is required. Usage: alt-git-commit -m <message>"
+exit 1

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ "$1" == "-d" ]]; then
+  branch="$2"
+  echo "Delete branch: $branch"
+
+  ## git branch -d <branch_name>
+  git update-ref -d "refs/heads/$branch"  # removes the ref from .git/refs/heads/
+  rm -f ".git/logs/refs/heads/$branch"    # removes the ref log for that branch
+  exit 0
+fi
+
+if [[ -n "$1" ]]; then
+  branch="$1"
+  echo "Create branch: $branch"
+
+  ## git branch <branch_name>
+  git update-ref "refs/heads/$branch" HEAD
+  exit 0
+fi
+
+## git branch
+ls .git/refs/heads/

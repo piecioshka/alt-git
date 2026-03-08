@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+file="$1"
+
+if [ ! -f "$file" ]; then
+  echo "Error: File '$file' does not exist."
+  exit 1
+fi
+
+echo "Add file: $file"
+
+## git add <file>
+git update-index --add "$file"

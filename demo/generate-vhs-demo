@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+rm -rf tmp/test-git-repo/
+
+{
+  echo "Output demo/overview.gif"
+
+  echo 'Set Shell "bash"'
+  echo 'Set Framerate 60'
+  echo 'Set FontSize 12'
+  echo 'Set Width 800'
+  echo 'Set Height 400'
+  echo 'Set Padding 20'
+  echo 'Set Margin 5'
+  echo 'Set MarginFill "#212830"'
+  echo 'Set BorderRadius 10'
+
+  echo "Type 'mkdir -p tmp/test-git-repo && cd tmp/test-git-repo' Enter"
+  echo "Wait Sleep 500ms"
+
+  while IFS= read -r line; do
+    echo "Type '$line'"
+    echo "Enter"
+    echo "Wait Sleep 500ms"
+  done < test.sh
+
+  echo "Sleep 3s"
+} | vhs

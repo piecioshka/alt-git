@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ -n "$1" ]]; then
+  tag="$1"
+
+  if git rev-parse --verify "refs/tags/$tag" > /dev/null 2>&1; then
+    echo "Error: Tag '$tag' already exists."
+    exit 1
+  fi
+
+  echo "Create tag: $tag"
+
+  ## git tag <tag_name>
+  git update-ref "refs/tags/$tag" HEAD
+  exit 0
+fi
+
+## git tag
+ls .git/refs/tags
