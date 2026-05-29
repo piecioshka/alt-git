@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ## Initializing a new Git repository
 
 alt-git-init
