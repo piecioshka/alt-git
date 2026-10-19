@@ -76,6 +76,10 @@ Recorded with [vhs](https://github.com/charmbracelet/vhs).
 
 ![](demo/overview.gif)
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Related
 
 - https://github.com/piecioshka/git-scripts
